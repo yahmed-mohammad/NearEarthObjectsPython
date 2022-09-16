@@ -10,7 +10,6 @@ formatted as described in the project instructions, into a collection of
 The main module calls these functions with the arguments provided at the command
 line, and uses the resulting collections to build an `NEODatabase`.
 
-You'll edit this file in Task 2.
 """
 import csv
 import json
@@ -24,8 +23,27 @@ def load_neos(neo_csv_path):
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
-    # TODO: Load NEO data from the given CSV file.
-    return ()
+    with open(neo_csv_path, 'r') as input_file:
+        reader = csv.DictReader(input_file)
+        neos = []
+        for line in reader:
+            _name = line['name'] or None
+            _diameter = float(line['diameter']) if line['diameter'] else None
+            _pha = False if line['pha'] in ['', 'N'] else True
+
+            try:
+                # Create NearEarthObject
+                neo = NearEarthObject(
+                    designation=line['pdes'],
+                    name=_name,
+                    diameter=_diameter,
+                    hazardous=_pha
+                )
+            except Exception as exp:
+                print(exp)
+            else:
+                neos.append(neo)
+    return neos
 
 
 def load_approaches(cad_json_path):
@@ -34,5 +52,19 @@ def load_approaches(cad_json_path):
     :param cad_json_path: A path to a JSON file containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-    # TODO: Load close approach data from the given JSON file.
-    return ()
+    with open(cad_json_path, 'r') as input_file:
+        reader = json.load(input_file)
+        approaches = []
+        for line in reader:
+            try:
+                approach = CloseApproach(
+                    designation=line['des'],
+                    time=line['cd'],
+                    distance=float(line['dist']),
+                    velocity=float(line['v_rel'])
+                )
+            except Exception as exp:
+                print(exp)
+            else:
+                approaches.append(approach)
+    return approaches

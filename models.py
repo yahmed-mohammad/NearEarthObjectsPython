@@ -31,16 +31,19 @@ class NearEarthObject:
     initialized to an empty collection, but eventually populated in the
     `NEODatabase` constructor.
     """
+
     def __init__(self, **info):
         """Create a new `NearEarthObject`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
 
-        self.designation = info['dictionary']
-        self.name = info['name']
-        self.diameter = info.get('diameter', float('nan'))
-        self.hazardous = info['hazardous']
+        self.designation = info.get('designation')
+        self.name = info.get('name')
+        self.diameter = info.get('diameter')
+        if not self.diameter:
+            self.diameter = float('nan')
+        self.hazardous = info.get('hazardous')
 
         # Empty initial collection of linked approaches.
         self.approaches = []
@@ -49,7 +52,7 @@ class NearEarthObject:
     def fullname(self):
         """Return a representation of the full name of this NEO."""
         if self.name:
-            return f"{self.desination} {self.name}"
+            return f"{self.designation} {self.name}"
         else:
             return f"{self.designation}"
 
@@ -62,6 +65,17 @@ class NearEarthObject:
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, " \
                f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
+
+    def format(self):
+        """
+        Returns the formatted form of self attribute
+        """
+        return {
+            'designation': self.designation,
+            'name': self.name,
+            'diameter_km': self.diameter,
+            'potentially_hazardous': self.hazardous
+        }
 
 
 class CloseApproach:
@@ -77,20 +91,21 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
+
     def __init__(self, **info):
         """Create a new `CloseApproach`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
-        self._designation = info['designation']
-        self.time = info['time']
+        self._designation = info.get('designation')
+        self.time = info.get('time')
         if self.time:
             self.time = cd_to_datetime(self.time)
         self.distance = info.get('distance', float('nan'))
         self.velocity = info.get('velocity', float('nan'))
 
         # Attribute for the referenced NEO
-        self.neo = info['neo']
+        self.neo = info.get('neo')
 
     @property
     def designation(self):
@@ -120,9 +135,18 @@ class CloseApproach:
         """Return `str(self)`."""
 
         return f"On {self.time_str},  {self.neo.fullname} approaches earth at a distance of {self.distance:.2f} au " \
-               f"and at a velocity of {self.velocity} km/s."
+               f"and at a velocity of {self.velocity:.2f} km/s."
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, " \
                f"velocity={self.velocity:.2f}, neo={self.neo!r})"
+
+    def format(self):
+        """Returns the formatted form of self attribute"""
+        formatted_self = {
+            'datetime_utc': datetime_to_str(self.time),
+            'distance_au': self.distance,
+            'velocity_km_s': self.velocity
+        }
+        return  formatted_self

@@ -68,7 +68,7 @@ class NEODatabase:
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
 
-        return self._neo_by_name.get(designation, None)
+        return self._neo_by_designation.get(designation, None)
 
     def get_neo_by_name(self, name):
         """Find and return an NEO by its name.

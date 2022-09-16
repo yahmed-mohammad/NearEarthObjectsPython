@@ -28,11 +28,12 @@ def write_to_csv(results, filename):
         'datetime_utc', 'distance_au', 'velocity_km_s',
         'designation', 'name', 'diameter_km', 'potentially_hazardous'
     )
-    with open(filename, 'w') as output_file:
+    with open(filename, 'w', newline='') as output_file:
         writer = csv.DictWriter(output_file, fieldnames=fieldnames)
         writer.writeheader()
+
         for result in results:
-            content = {**result.serialize(), **result.neo.serialize()}
+            content = {**result.format(), **result.neo.format()}
             content['name'] = content['name'] if content['name'] is not None else ''
             content['potentially_hazardous'] = True if content['potentially_hazardous'] else False
             writer.writerow(content)
@@ -51,7 +52,7 @@ def write_to_json(results, filename):
     """
     json_list = []
     for result in results:
-        content = {**result.serialize(), **result.neo.serialize()}
+        content = {**result.format(), **result.neo.format()}
         content['name'] = content['name'] if content['name'] is not None else ''
         content['potentially_hazardous'] = True if content['potentially_hazardous'] else False
         json_list.append(

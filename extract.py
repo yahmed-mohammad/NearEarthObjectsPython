@@ -54,6 +54,7 @@ def load_approaches(cad_json_path):
     """
     with open(cad_json_path, 'r') as input_file:
         reader = json.load(input_file)
+        reader = [dict(zip(reader['fields'], data)) for data in reader['data']]
         approaches = []
         for line in reader:
             try:

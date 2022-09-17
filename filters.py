@@ -70,18 +70,16 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self):
+        """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
 
 class DateFilter(AttributeFilter):
-    """
-    A class which extends Attribute filter and applies the Date Filter to the Close approach objects.
-    """
+    """A class which extends Attribute filter and applies the Date Filter to the Close approach objects."""
 
     @classmethod
     def get(cls, approach):
-        """
-        This method converts the time attribute if approach to datetime object.
+        """Convert the time attribute if approach to datetime object.
 
         :param approach: A `CloseApproach` on which to evaluate this filter.
         :return: converted time to datetime
@@ -90,14 +88,11 @@ class DateFilter(AttributeFilter):
 
 
 class DistanceFilter(AttributeFilter):
-    """
-    A class which extends Attribute filter and returns the Distance Filter of the Close approach objects.
-    """
+    """A class which extends Attribute filter and returns the Distance Filter of the Close approach objects."""
 
     @classmethod
     def get(cls, approach):
-        """
-        This method returns the distance of the close approach object
+        """Return the distance of the close approach object.
 
         :param approach: A `CloseApproach` on which to evaluate this filter.
         :return: distance
@@ -106,14 +101,11 @@ class DistanceFilter(AttributeFilter):
 
 
 class VelocityFilter(AttributeFilter):
-    """
-    A class which extends Attribute filter and returns the Velocity Filter of the Close approach objects.
-    """
+    """A class which extends Attribute filter and returns the Velocity Filter of the Close approach objects."""
 
     @classmethod
     def get(cls, approach):
-        """
-        This method returns the velocity of the close approach object
+        """Return the velocity of the close approach object.
 
         :param approach: A `CloseApproach` on which to evaluate this filter.
         :return: velocity
@@ -122,14 +114,11 @@ class VelocityFilter(AttributeFilter):
 
 
 class DiameterFilter(AttributeFilter):
-    """
-    A class which extends Attribute filter and return the Diameter of the Close approach objects.
-    """
+    """A class which extends Attribute filter and return the Diameter of the Close approach objects."""
 
     @classmethod
     def get(cls, approach):
-        """
-        This method returns the diameter of the close approach object
+        """Return the diameter of the close approach object.
 
         :param approach: A `CloseApproach` on which to evaluate this filter.
         :return: diameter
@@ -138,14 +127,11 @@ class DiameterFilter(AttributeFilter):
 
 
 class HazardousFilter(AttributeFilter):
-    """
-    A class which extends Attribute filter and returns how much hazardous the Close approach objects is.
-    """
+    """A class which extends Attribute filter and returns how much hazardous the Close approach objects is."""
 
     @classmethod
     def get(cls, approach):
-        """
-        This method returns the hazardous value of the close approach object
+        """Return the hazardous value of the close approach object.
 
         :param approach: A `CloseApproach` on which to evaluate this filter.
         :return: hazardous attribute

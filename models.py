@@ -37,7 +37,6 @@ class NearEarthObject:
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
-
         self.designation = info.get('designation')
         self.name = info.get('name')
         self.diameter = info.get('diameter')
@@ -67,9 +66,7 @@ class NearEarthObject:
                f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
 
     def format(self):
-        """
-        Returns the formatted form of self attribute
-        """
+        """Return the formatted form of self attribute."""
         return {
             'designation': self.designation,
             'name': self.name,
@@ -109,7 +106,7 @@ class CloseApproach:
 
     @property
     def designation(self):
-        """Return designation"""
+        """Return designation."""
         return self._designation
 
     @property
@@ -133,7 +130,6 @@ class CloseApproach:
 
     def __str__(self):
         """Return `str(self)`."""
-
         return f"On {self.time_str},  {self.neo.fullname} approaches earth at a distance of {self.distance:.2f} au " \
                f"and at a velocity of {self.velocity:.2f} km/s."
 
@@ -143,10 +139,10 @@ class CloseApproach:
                f"velocity={self.velocity:.2f}, neo={self.neo!r})"
 
     def format(self):
-        """Returns the formatted form of self attribute"""
+        """Return the formatted form of self attribute."""
         formatted_self = {
             'datetime_utc': datetime_to_str(self.time),
             'distance_au': self.distance,
             'velocity_km_s': self.velocity
         }
-        return  formatted_self
+        return formatted_self
